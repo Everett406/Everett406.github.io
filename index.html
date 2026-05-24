@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jiahui Shang</title>
+    <title>尚佳辉 — 个人主页</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #f7f5f2;
@@ -29,14 +29,15 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.8;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Hero Section */
+        /* Hero */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -64,28 +65,34 @@
         .hero-content {
             position: relative;
             z-index: 1;
-            max-width: 680px;
+            max-width: 720px;
         }
 
         .hero-name {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            font-weight: 400;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            margin-bottom: 24px;
+            font-family: 'Noto Serif SC', serif;
+            font-size: clamp(2.8rem, 7vw, 5rem);
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            line-height: 1.3;
+            margin-bottom: 20px;
             animation: fadeInUp 1s ease-out;
         }
 
-        .hero-name span {
-            font-style: italic;
+        .hero-name .en {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.35em;
+            font-weight: 300;
+            letter-spacing: 0.15em;
             color: var(--accent);
+            display: block;
+            margin-top: 8px;
+            text-transform: uppercase;
         }
 
         .hero-desc {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             color: var(--text-light);
-            max-width: 500px;
+            max-width: 480px;
             margin: 0 auto 40px;
             animation: fadeInUp 1s ease-out 0.2s both;
         }
@@ -106,7 +113,7 @@
             fill: none;
         }
 
-        /* Navigation */
+        /* Nav */
         nav {
             position: fixed;
             top: 0;
@@ -127,10 +134,10 @@
         }
 
         .logo {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Noto Serif SC', serif;
             font-size: 1.25rem;
             font-weight: 600;
-            letter-spacing: -0.02em;
+            letter-spacing: 0.1em;
         }
 
         .nav-links {
@@ -171,16 +178,17 @@
         }
 
         .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-weight: 400;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
             margin-bottom: 60px;
-            letter-spacing: -0.02em;
+            letter-spacing: 0.05em;
+            line-height: 1.4;
         }
 
         .section-title em {
             color: var(--accent);
-            font-style: italic;
+            font-style: normal;
         }
 
         /* About */
@@ -192,27 +200,29 @@
         }
 
         .about-text {
-            font-size: 1.05rem;
+            font-size: 1rem;
             color: var(--text-light);
-            line-height: 1.8;
+            line-height: 2;
         }
 
         .about-text p {
             margin-bottom: 20px;
+            text-align: justify;
         }
 
         .stats {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 32px;
+            gap: 24px;
         }
 
         .stat-item {
-            padding: 24px;
+            padding: 28px 24px;
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 12px;
             transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
         }
 
         .stat-item:hover {
@@ -221,15 +231,16 @@
         }
 
         .stat-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 300;
             color: var(--accent);
             line-height: 1;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .stat-label {
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             color: var(--text-light);
         }
 
@@ -242,7 +253,7 @@
         .project-card {
             display: grid;
             grid-template-columns: auto 1fr;
-            gap: 32px;
+            gap: 28px;
             padding: 32px;
             background: var(--card);
             border: 1px solid var(--border);
@@ -259,23 +270,27 @@
         }
 
         .project-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 300;
             color: var(--accent);
             opacity: 0.5;
             line-height: 1;
+            min-width: 40px;
         }
 
         .project-info h3 {
-            font-size: 1.25rem;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.2rem;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            letter-spacing: 0.02em;
         }
 
         .project-info p {
             color: var(--text-light);
             font-size: 0.95rem;
-            line-height: 1.7;
+            line-height: 1.8;
         }
 
         .project-tags {
@@ -306,17 +321,18 @@
 
         .contact-desc {
             color: var(--text-light);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             margin-bottom: 40px;
-            max-width: 500px;
+            max-width: 480px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.8;
         }
 
         .contact-links {
             display: flex;
             justify-content: center;
-            gap: 24px;
+            gap: 20px;
             flex-wrap: wrap;
         }
 
@@ -332,6 +348,7 @@
             font-weight: 500;
             font-size: 0.95rem;
             transition: all 0.3s ease;
+            letter-spacing: 0.02em;
         }
 
         .contact-btn:hover {
@@ -406,7 +423,11 @@
 
             .project-card {
                 grid-template-columns: 1fr;
-                gap: 16px;
+                gap: 12px;
+            }
+
+            .project-number {
+                font-size: 1.2rem;
             }
 
             .nav-links {
@@ -422,27 +443,34 @@
             }
 
             .section-title {
-                font-size: 2rem;
+                font-size: 1.8rem;
+            }
+
+            .hero-name {
+                letter-spacing: 0.05em;
             }
         }
     </style>
 </head>
 <body>
     <nav id="navbar">
-        <div class="logo">JS</div>
+        <div class="logo">尚</div>
         <ul class="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#about">关于</a></li>
+            <li><a href="#projects">项目</a></li>
+            <li><a href="#contact">联系</a></li>
         </ul>
     </nav>
 
     <header class="hero">
         <div class="hero-content">
-            <h1 class="hero-name">Jiahui <span>Shang</span></h1>
+            <h1 class="hero-name">
+                尚佳辉
+                <span class="en">Jiahui Shang</span>
+            </h1>
             <p class="hero-desc">
-                Crafting thoughtful digital experiences. 
-                Currently exploring the space between design and engineering.
+                在设计与工程的交界地带，
+                做一些认真且有趣的事情。
             </p>
         </div>
         <div class="scroll-hint">
@@ -451,54 +479,49 @@
     </header>
 
     <section id="about">
-        <h2 class="section-title reveal">About <em>Me</em></h2>
+        <h2 class="section-title reveal">关于<em>我</em></h2>
         <div class="about-grid">
             <div class="about-text reveal">
                 <p>
-                    I'm a developer and designer who believes the best products are born 
-                    at the intersection of aesthetic precision and technical excellence.
+                    我是一名开发者，也是一名设计师。我相信好的产品诞生于美学 precision 与技术卓越的交汇处——不多不少，刚刚好。
                 </p>
                 <p>
-                    When I'm not building, you'll find me exploring cities with my camera, 
-                    diving deep into a good book, or tinkering with side projects that 
-                    solve problems I personally care about.
+                    不写代码的时候，我在城市里带着相机乱走，在一本书里沉进去，或者捣鼓一些解决我自己痛点的 side project。
                 </p>
             </div>
             <div class="stats reveal">
                 <div class="stat-item">
                     <div class="stat-number">5+</div>
-                    <div class="stat-label">Years Building</div>
+                    <div class="stat-label">年构建经验</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">20+</div>
-                    <div class="stat-label">Projects Shipped</div>
+                    <div class="stat-label">项目落地</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">∞</div>
-                    <div class="stat-label">Curiosity</div>
+                    <div class="stat-label">好奇心</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">0</div>
-                    <div class="stat-label">Regrets</div>
+                    <div class="stat-label">遗憾</div>
                 </div>
             </div>
         </div>
     </section>
 
     <section id="projects">
-        <h2 class="section-title reveal">Selected <em>Works</em></h2>
+        <h2 class="section-title reveal">精选<em>作品</em></h2>
         <div class="projects-grid">
             <a href="#" class="project-card reveal">
                 <div class="project-number">01</div>
                 <div class="project-info">
                     <h3>LiveSort</h3>
-                    <p>A real-time data visualization tool for sorting algorithms. 
-                    Built with Electron and modern web technologies to make 
-                    computer science concepts tangible and beautiful.</p>
+                    <p>一个实时数据可视化工具，将排序算法的抽象概念转化为可触摸、可观看的视觉体验。基于 Electron 构建，让计算机科学变得直观而美丽。</p>
                     <div class="project-tags">
                         <span class="tag">Electron</span>
-                        <span class="tag">Visualization</span>
-                        <span class="tag">Education</span>
+                        <span class="tag">可视化</span>
+                        <span class="tag">教育</span>
                     </div>
                 </div>
             </a>
@@ -506,14 +529,12 @@
             <a href="#" class="project-card reveal">
                 <div class="project-number">02</div>
                 <div class="project-info">
-                    <h3>Daily Report</h3>
-                    <p>An automated intelligence brief system that curates and 
-                    synthesizes daily information across geopolitics, markets, 
-                    and technology into elegant, readable reports.</p>
+                    <h3>每日简报</h3>
+                    <p>自动化情报简报系统，横跨地缘政治、市场动态与科技前沿，将纷繁的信息梳理成优雅、可读的每日报告。</p>
                     <div class="project-tags">
-                        <span class="tag">Automation</span>
-                        <span class="tag">Data</span>
-                        <span class="tag">News</span>
+                        <span class="tag">自动化</span>
+                        <span class="tag">数据</span>
+                        <span class="tag">资讯</span>
                     </div>
                 </div>
             </a>
@@ -521,14 +542,12 @@
             <a href="#" class="project-card reveal">
                 <div class="project-number">03</div>
                 <div class="project-info">
-                    <h3>Personal Site</h3>
-                    <p>This very website — a playground for experimenting with 
-                    typography, motion design, and the art of digital storytelling. 
-                    Built from scratch with care and attention to detail.</p>
+                    <h3>这个网站</h3>
+                    <p>这个页面本身——一个关于排版、动效设计与数字叙事的实验场。从零开始，一点点打磨出来。</p>
                     <div class="project-tags">
-                        <span class="tag">Design</span>
-                        <span class="tag">Frontend</span>
-                        <span class="tag">Typography</span>
+                        <span class="tag">设计</span>
+                        <span class="tag">前端</span>
+                        <span class="tag">排版</span>
                     </div>
                 </div>
             </a>
@@ -536,10 +555,10 @@
     </section>
 
     <section id="contact" class="contact-section">
-        <h2 class="section-title reveal">Let's <em>Talk</em></h2>
+        <h2 class="section-title reveal">来<em>聊聊</em></h2>
         <p class="contact-desc reveal">
-            Whether you have a project in mind, want to collaborate, 
-            or just want to say hello — I'd love to hear from you.
+            有项目想法、合作意向，或者单纯想打个招呼——
+            我都在。
         </p>
         <div class="contact-links reveal">
             <a href="mailto:hello@everett.top" class="contact-btn">
@@ -547,7 +566,7 @@
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                     <polyline points="22,6 12,13 2,6"/>
                 </svg>
-                Say Hello
+                发邮件
             </a>
             <a href="https://github.com/Everett406" class="contact-btn secondary">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -559,11 +578,10 @@
     </section>
 
     <footer>
-        <p>© 2026 Jiahui Shang. Designed & built with care.</p>
+        <p>© 2026 尚佳辉。认真设计与构建。</p>
     </footer>
 
     <script>
-        // Navbar scroll effect
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
@@ -573,7 +591,6 @@
             }
         });
 
-        // Reveal on scroll
         const reveals = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
