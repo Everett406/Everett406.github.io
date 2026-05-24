@@ -1,41 +1,155 @@
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
-    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="https://www.helloimg.com/i/2025/09/13/68c5376e29e34.png" />
-    <link rel="apple-touch-icon" href="https://www.helloimg.com/i/2025/09/13/68c5376e29e34.png" />
-    <link rel="bookmark" href="https://www.helloimg.com/i/2025/09/13/68c5376e29e34.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="200x200" href="https://www.helloimg.com/i/2025/09/13/68c5376e29e34.png" />
-    <meta name="description" content="一个默默无闻的主页" />
-    <meta name="keywords" content="赴野,个人主页" />
-    <meta name="author" content="赴野" />
-    <meta name="theme-color" content="#424242" />
-    <title>个人主页</title>
-    <!-- HarmonyOS Sans -->
-    <!-- 本站 CDN 已开启防盗链，非本站域名不可访问，请更改链接为下方内容，否则自定义字体将失效 -->
-    <link rel="stylesheet" href="https://s1.hdslb.com/bfs/static/jinkela/long/font/regular.css" />
-    <!-- <link rel="stylesheet" href="https://cdn.imsyy.top/gh/imsyy/file/font/HarmonyOS_Sans/regular.min.css" /> -->
-    <!-- IE Out -->
-    <script>
-      if (/*@cc_on!@*/ false || (!!window.MSInputMethodContext && !!document.documentMode))
-        window.location.href =
-          'https://support.dmeng.net/upgrade-your-browser.html?referrer=' +
-          encodeURIComponent(window.location.href);
-    </script>
-    <script type="module" crossorigin src="/assets/index-bbcbe4fe.js"></script>
-    <link rel="stylesheet" href="/assets/index-fe821d62.css">
-  <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
-
-  <body>
-    <!-- 主体内容 -->
-    <div id="app"></div>
-    <!-- noscript -->
-    <noscript>
-      <div style="text-align: center">请开启 JavaScript</div>
-    </noscript>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jiahui Shang</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #fafafa;
+            color: #1a1a1a;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        main {
+            flex: 1;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 80px 24px 40px;
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+        
+        .tagline {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        section {
+            margin-bottom: 48px;
+        }
+        
+        h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #999;
+            margin-bottom: 16px;
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: #333;
+        }
+        
+        a {
+            color: #1a1a1a;
+            text-decoration: none;
+            border-bottom: 1px solid #ccc;
+            transition: border-color 0.2s;
+        }
+        
+        a:hover {
+            border-color: #1a1a1a;
+        }
+        
+        .links {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .project {
+            margin-bottom: 24px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+        
+        .project h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .project p {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: #999;
+            font-size: 0.85rem;
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            main {
+                padding-top: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Jiahui Shang</h1>
+        <p class="tagline">Building things on the web.</p>
+        
+        <section>
+            <h2>About</h2>
+            <p>
+                This is a fresh start. Tell your story here — what you do, what you're building, 
+                or what you're curious about.
+            </p>
+        </section>
+        
+        <section>
+            <h2>Projects</h2>
+            <div class="project">
+                <h3><a href="#">Project One</a></h3>
+                <p>A short description of what this project does and why it matters.</p>
+            </div>
+            <div class="project">
+                <h3><a href="#">Project Two</a></h3>
+                <p>Another thing you've built. Keep it concise.</p>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Contact</h2>
+            <div class="links">
+                <a href="mailto:hello@everett.top">Email</a>
+                <a href="https://github.com/Everett406">GitHub</a>
+            </div>
+        </section>
+    </main>
     
-  </body>
+    <footer>
+        © 2026 Jiahui Shang
+    </footer>
+</body>
 </html>
