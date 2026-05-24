@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>尚佳辉 — 个人主页</title>
+    <title>尚佳辉 — 人生的意义在于折腾</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -95,6 +95,15 @@
             max-width: 480px;
             margin: 0 auto 40px;
             animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-quote {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 0.95rem;
+            color: var(--accent);
+            font-style: italic;
+            letter-spacing: 0.05em;
+            animation: fadeInUp 1s ease-out 0.4s both;
         }
 
         .scroll-hint {
@@ -309,6 +318,49 @@
             font-weight: 500;
         }
 
+        /* Awards */
+        .awards-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .award-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 24px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .award-item:hover {
+            border-color: var(--accent-light);
+            transform: translateX(4px);
+        }
+
+        .award-badge {
+            padding: 8px 16px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+
+        .award-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .award-info p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
         /* Contact */
         .contact-section {
             text-align: center;
@@ -430,6 +482,12 @@
                 font-size: 1.2rem;
             }
 
+            .award-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
             .nav-links {
                 gap: 20px;
             }
@@ -458,6 +516,7 @@
         <ul class="nav-links">
             <li><a href="#about">关于</a></li>
             <li><a href="#projects">项目</a></li>
+            <li><a href="#awards">获奖</a></li>
             <li><a href="#contact">联系</a></li>
         </ul>
     </nav>
@@ -469,9 +528,11 @@
                 <span class="en">Jiahui Shang</span>
             </h1>
             <p class="hero-desc">
-                在设计与工程的交界地带，
-                做一些认真且有趣的事情。
+                无人机应用技术专业 · INTJ · 折腾爱好者
+                <br>
+                在代码、音乐与创作之间寻找自己的频率。
             </p>
+            <p class="hero-quote">"人生的意义在于折腾。"</p>
         </div>
         <div class="scroll-hint">
             <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
@@ -483,74 +544,117 @@
         <div class="about-grid">
             <div class="about-text reveal">
                 <p>
-                    我是一名开发者，也是一名设计师。我相信好的产品诞生于美学 precision 与技术卓越的交汇处——不多不少，刚刚好。
+                    2006年生于河北衡水，在福建泉州长大，现就读于长沙航空职业技术学院无人机应用技术专业。一个正在学习如何"先造一坨出来"的INTJ。
                 </p>
                 <p>
-                    不写代码的时候，我在城市里带着相机乱走，在一本书里沉进去，或者捣鼓一些解决我自己痛点的 side project。
+                    我相信没有什么是学不会的，区别在于经历、实践、思考。同时折腾着ESP32小飞机、YOLO计算机视觉、AstrBot、视频剪辑和歌词创作——广度优先是我的默认模式。
+                </p>
+                <p>
+                    音乐是我与现实世界谈判时唯一不会背叛我的筹码。网易云音乐里479首红心歌曲，每一首都是我在某个特定时刻与自己的一次秘密握手。
                 </p>
             </div>
             <div class="stats reveal">
                 <div class="stat-item">
-                    <div class="stat-number">5+</div>
-                    <div class="stat-label">年构建经验</div>
+                    <div class="stat-number">8+</div>
+                    <div class="stat-label">GitHub仓库</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">20+</div>
-                    <div class="stat-label">项目落地</div>
+                    <div class="stat-number">479</div>
+                    <div class="stat-label">红心歌曲</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">奖项收获</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">∞</div>
                     <div class="stat-label">好奇心</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">遗憾</div>
                 </div>
             </div>
         </div>
     </section>
 
     <section id="projects">
-        <h2 class="section-title reveal">精选<em>作品</em></h2>
+        <h2 class="section-title reveal">精选<em>项目</em></h2>
         <div class="projects-grid">
-            <a href="#" class="project-card reveal">
+            <a href="https://github.com/Everett406/chinese-names-app" class="project-card reveal" target="_blank">
                 <div class="project-number">01</div>
                 <div class="project-info">
-                    <h3>LiveSort</h3>
-                    <p>一个实时数据可视化工具，将排序算法的抽象概念转化为可触摸、可观看的视觉体验。基于 Electron 构建，让计算机科学变得直观而美丽。</p>
+                    <h3>中文人名工具箱</h3>
+                    <p>基于中文人名语料库的 Android 工具 APP，Flutter 构建。包含人名生成、搜索、姓氏大全、成语词典等功能——把对中文姓名的兴趣做成了一款实用工具。</p>
                     <div class="project-tags">
-                        <span class="tag">Electron</span>
-                        <span class="tag">可视化</span>
-                        <span class="tag">教育</span>
+                        <span class="tag">Flutter</span>
+                        <span class="tag">Dart</span>
+                        <span class="tag">Android</span>
                     </div>
                 </div>
             </a>
 
-            <a href="#" class="project-card reveal">
+            <a href="https://github.com/Everett406/LiveSort-Electron" class="project-card reveal" target="_blank">
                 <div class="project-number">02</div>
                 <div class="project-info">
-                    <h3>每日简报</h3>
-                    <p>自动化情报简报系统，横跨地缘政治、市场动态与科技前沿，将纷繁的信息梳理成优雅、可读的每日报告。</p>
+                    <h3>LiveSort</h3>
+                    <p>歌曲无感过渡与自动编排工具。Electron 构建，让你的歌单像 DJ 一样流畅切换，消除歌曲之间的突兀间隙。</p>
                     <div class="project-tags">
-                        <span class="tag">自动化</span>
-                        <span class="tag">数据</span>
-                        <span class="tag">资讯</span>
+                        <span class="tag">Electron</span>
+                        <span class="tag">音乐</span>
+                        <span class="tag">音频处理</span>
                     </div>
                 </div>
             </a>
 
-            <a href="#" class="project-card reveal">
+            <a href="https://github.com/Everett406/himawari8-earth-downloader" class="project-card reveal" target="_blank">
                 <div class="project-number">03</div>
                 <div class="project-info">
-                    <h3>这个网站</h3>
-                    <p>这个页面本身——一个关于排版、动效设计与数字叙事的实验场。从零开始，一点点打磨出来。</p>
+                    <h3>向日葵8号地球下载器</h3>
+                    <p>自动获取 Himawari-8 气象卫星的实时地球影像。Python 编写，把从太空看地球的视角带到本地桌面。</p>
                     <div class="project-tags">
-                        <span class="tag">设计</span>
-                        <span class="tag">前端</span>
-                        <span class="tag">排版</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">卫星数据</span>
+                        <span class="tag">可视化</span>
                     </div>
                 </div>
             </a>
+
+            <a href="https://github.com/Everett406/Roll-Call-APP" class="project-card reveal" target="_blank">
+                <div class="project-number">04</div>
+                <div class="project-info">
+                    <h3>点名APP</h3>
+                    <p>一款实用的点名工具，Flutter 构建。解决课堂、会议等场景的点名需求，简单而直接。</p>
+                    <div class="project-tags">
+                        <span class="tag">Flutter</span>
+                        <span class="tag">工具</span>
+                        <span class="tag">实用</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section id="awards">
+        <h2 class="section-title reveal">获奖<em>记录</em></h2>
+        <div class="awards-grid">
+            <div class="award-item reveal">
+                <div class="award-badge">省级三等奖</div>
+                <div class="award-info">
+                    <h4>公众号文章创作</h4>
+                    <p>借助 Gemini 2.5 Pro 辅助创作，获得省级三等奖</p>
+                </div>
+            </div>
+            <div class="award-item reveal">
+                <div class="award-badge">校级二等奖</div>
+                <div class="award-info">
+                    <h4>获取卫星图片的小程序</h4>
+                    <p>Python 开发，从卫星数据中获取地球影像的实用工具</p>
+                </div>
+            </div>
+            <div class="award-item reveal">
+                <div class="award-badge">校级一等奖</div>
+                <div class="award-info">
+                    <h4>心理微视频</h4>
+                    <p>Premiere / After Effects 制作，获校级心理微视频大赛一等奖</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -568,7 +672,7 @@
                 </svg>
                 发邮件
             </a>
-            <a href="https://github.com/Everett406" class="contact-btn secondary">
+            <a href="https://github.com/Everett406" class="contact-btn secondary" target="_blank">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                 </svg>
@@ -578,7 +682,7 @@
     </section>
 
     <footer>
-        <p>© 2026 尚佳辉。认真设计与构建。</p>
+        <p>© 2026 尚佳辉。人生的意义在于折腾。</p>
     </footer>
 
     <script>
