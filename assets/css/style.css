@@ -505,20 +505,127 @@ main { margin-left: var(--rail-w); }
 .detail-meta { display: flex; gap: 16px; margin-top: 18px; flex-wrap: wrap; align-items: center; }
 .detail-meta .dm-tag { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; color: var(--ink-60); border: 1px solid var(--ink-12); padding: 3px 10px; border-radius: 999px; }
 .detail-meta a.dm-link { font-family: var(--font-mono); font-size: 11.5px; color: var(--indigo); border-bottom: 1px solid currentColor; }
-.detail-body { font-size: 16.5px; line-height: 2.05; color: var(--ink-80); }
-.detail-body h3 { font-family: var(--font-serif); font-weight: 900; font-size: 24px; margin: 42px 0 14px; color: var(--ink); }
+/* ── 文章正文排版（.detail-body） ─────────────────────── */
+.detail-body {
+  font-family: var(--font-serif);
+  font-size: 16.5px;
+  line-height: 2.05;
+  color: var(--ink-80);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.detail-body > :first-child { margin-top: 0; }
 .detail-body p { margin-bottom: 14px; max-width: 42em; }
-.detail-body ul { margin: 0 0 14px 1.4em; }
+
+/* 标题层级：字号递减、顶距收紧（修掉 h2 上下过高的问题） */
+.detail-body h1,
+.detail-body h2,
+.detail-body h3,
+.detail-body h4,
+.detail-body h5,
+.detail-body h6 {
+  font-family: var(--font-serif);
+  font-weight: 900;
+  color: var(--ink);
+  line-height: 1.3;
+  margin: 26px 0 10px;
+}
+.detail-body h1 { font-size: 30px; margin-top: 30px; }
+.detail-body h2 { font-size: 26px; margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--ink-12); }
+.detail-body h3 { font-size: 22px; margin: 24px 0 10px; }
+.detail-body h4 { font-size: 19px; margin: 22px 0 10px; }
+.detail-body h5 { font-size: 17px; margin: 20px 0 8px; color: var(--ink); }
+.detail-body h6 { font-size: 15px; margin: 18px 0 8px; color: var(--ink-60); }
+
+/* 分割线：改成轻盈虚线（修掉太重的实线） */
+.detail-body hr {
+  border: 0;
+  height: 1px;
+  margin: 28px auto;
+  width: 60%;
+  background: none;
+  border-top: 1px dashed color-mix(in srgb, var(--ink-40) 55%, transparent);
+}
+
+/* 强调：粗体、斜体、粗斜体、删除线 */
+.detail-body strong { color: var(--ink); font-weight: 700; }
+.detail-body em {
+  font-style: italic;
+  /* LXGW WenKai Lite 没有真正的斜体字形，强制浏览器合成斜体，
+     否则 <em> 看起来跟普通正文一样，粗斜体也就只剩粗体了 */
+  font-synthesis: oblique;
+}
+.detail-body em strong, .detail-body strong em { font-style: italic; font-weight: 700; color: var(--ink); }
+.detail-body del { color: var(--ink-40); text-decoration: line-through; }
+
+/* 行内代码 */
+.detail-body code { font-size: .82em; }
+.detail-body pre { background: var(--ink); color: var(--paper); padding: 18px 20px; border-radius: 8px; overflow-x: auto; margin: 18px 0; font-size: 13.5px; line-height: 1.7; }
+.detail-body pre code { background: none; border: 0; padding: 0; color: inherit; font-size: inherit; }
+
+/* 列表：给 ol/ul 合理左缩进（修掉有序列表贴左） */
+.detail-body ul,
+.detail-body ol { margin: 0 0 14px; padding-left: 1.6em; max-width: 42em; }
+.detail-body ul { list-style: disc; }
+.detail-body ol { list-style: decimal; }
 .detail-body li { margin-bottom: 6px; }
-.detail-body strong { color: var(--ink); }
+.detail-body li::marker { color: var(--cinnabar); }
+.detail-body ul ul,
+.detail-body ol ol,
+.detail-body ul ol,
+.detail-body ol ul { margin: 6px 0 4px; }
+
+/* 任务列表：去掉默认圆点，checkbox 与文字对齐 */
+.detail-body ul.task-list,
+.detail-body ul.contains-task-list { list-style: none; padding-left: 1.2em; }
+.detail-body ul.task-list li,
+.detail-body ul.contains-task-list li { display: flex; align-items: flex-start; gap: 8px; }
+.detail-body ul.task-list input[type="checkbox"],
+.detail-body ul.contains-task-list input[type="checkbox"] {
+  margin-top: .55em; width: 14px; height: 14px; accent-color: var(--cinnabar);
+  flex-shrink: 0; cursor: default;
+}
+
+/* 链接：朱砂色 + 下划线，使其明显可点 */
+.detail-body a {
+  color: var(--cinnabar);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--cinnabar) 40%, transparent);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color .2s, text-decoration-color .2s;
+}
+.detail-body a:hover {
+  color: var(--cinnabar-d);
+  text-decoration-color: var(--cinnabar-d);
+}
+
+/* 引用块 */
 .detail-body blockquote {
   margin: 22px 0; padding: 18px 22px; border-left: 3px solid var(--cinnabar);
   background: var(--paper-2); font-family: var(--font-serif);
+  color: var(--ink-60);
 }
+.detail-body blockquote p:last-child { margin-bottom: 0; }
+
+/* 图片 */
 .detail-body img { max-width: 100%; border-radius: 6px; border: 1px solid var(--ink-12); }
-.detail-body code { font-size: .82em; }
-.detail-body pre { background: var(--ink); color: var(--paper); padding: 18px 20px; border-radius: 8px; overflow-x: auto; margin: 18px 0; font-size: 13.5px; line-height: 1.7; }
-.detail-body pre code { background: none; border: 0; padding: 0; color: inherit; }
+
+/* 视频：自适应宽度、圆角 */
+.detail-body video {
+  display: block; max-width: 100%; margin: 18px 0;
+  border-radius: 8px; border: 1px solid var(--ink-12); background: var(--ink);
+}
+
+/* 表格 */
+.detail-body table {
+  width: 100%; max-width: 42em; margin: 18px 0; border-collapse: collapse;
+  font-size: 15px; line-height: 1.7;
+}
+.detail-body th,
+.detail-body td { border: 1px solid var(--ink-12); padding: 8px 12px; text-align: left; }
+.detail-body th { background: var(--paper-2); font-weight: 700; color: var(--ink); }
+.detail-body tr:nth-child(even) td { background: var(--paper-2); }
 
 /* 详情页进出（无 View Transitions 时的降级） */
 .detail-root.fade-in { animation: detail-in .55s var(--ease-out) both; }
