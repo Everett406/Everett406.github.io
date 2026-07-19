@@ -5,7 +5,7 @@
 赴野（Everett）的个人主页 —— 手工打磨、无框架、部署于 GitHub Pages。
 站点地址：<https://everett406.github.io>
 
-当前版本：**v1.0.0**（通过 GitHub Releases 标记版本）
+当前版本：**v1.1.0**（通过 GitHub Releases 标记版本）
 
 ## 结构
 
@@ -33,9 +33,47 @@
 
 工作流使用 `concurrency.group: issue-post` 串行化，避免同一 issue 的多个事件并发推送互相拒绝；推送失败时还会 `pull --rebase` 重试。
 
+## Markdown 写作约定
+
+文章正文用 GitHub Flavored Markdown，下面几种容易踩坑的格式说明一下正确写法：
+
+### 任务列表
+
+`-` 后面要加 `[ ]` 或 `[x]`，才会渲染成带 checkbox 的任务列表；只写 `-` 会被当成普通无序列表。
+
+```markdown
+- [ ] 创建仓库
+- [x] 写首页代码
+```
+
+### 视频
+
+直接把视频文件拖进 Issue 编辑器，GitHub 会生成形如 `https://github.com/user-attachments/assets/<uuid>` 的链接，这种链接会被自动转成内嵌 `<video>` 播放器（无需扩展名）。外链视频则用普通 Markdown 链接写法，地址以 `.mp4` / `.mov` / `.webm` 结尾即可：
+
+```markdown
+[演示视频](https://example.com/demo.mp4)
+```
+
+注意：从 Excel 等办公软件里复制粘贴视频，通常不会自动转成 Markdown 链接，需要手动写成上面的格式，或直接把文件拖进 Issue 编辑器上传。
+
+### 表格
+
+GFM 表格必须用 `|` 分隔，且要有表头分隔行；用 Tab 或空格对齐的多行文本会被当成普通段落，不会渲染成表格。
+
+```markdown
+| 项目   | 状态 | 备注         |
+| ------ | ---- | ------------ |
+| 标题   | ✅   | H2-H6 正常   |
+| 视频   | ✅   | 自动内嵌播放 |
+```
+
+### 强调
+
+`*星号*` 和 `_下划线_` 都表示斜体，但下划线紧贴中文时 marked 可能识别不出来，**推荐统一用星号**：`*斜体*`、`**粗体**`、`***粗斜体***`。脚本会自动把常见的 `_**x**_` 写法归一成 `***x***`。
+
 ## 版本约定
 
-采用语义化版本 `vMAJOR.MINOR.PATCH`，每次功能更新或 bug 修复都会更新版本号、调整本文件及站内关于页 / footer，并在 [Releases](../../releases) 发布。
+采用语义化版本 `vMAJOR.MINOR.PATCH`，每次功能更新或 bug 修复都会更新版本号、调整本文件及站内 footer，并在 [Releases](../../releases) 发布。
 
 ## 致谢
 
