@@ -4,10 +4,18 @@ name: Issue → Post
 on:
   issues:
     types: [opened, edited, closed, reopened, deleted, labeled, unlabeled]
+  workflow_dispatch:
 
 permissions:
   contents: write
   issues: read
+
+# 同一个 issue 的多个事件（opened / labeled / edited …）几乎同时到达时，
+# 会并发触发多个 run，抢着 push 同一个 main，后到的会被远端 reject。
+# 用并发组串行化：后续 run 排队，等前一个跑完再以最新代码重新构建。
+concurrency:
+  group: issue-post
+  cancel-in-progress: false
 
 jobs:
   build-posts:
@@ -33,6 +41,14 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add posts/posts.json
-          git diff --cached --quiet && echo "no changes" && exit 0
+          if git diff --cached --quiet; then echo "no changes"; exit 0; fi
           git commit -m "chore(posts): sync from issues [skip ci]"
-          git push
+          # 远端可能被并发推送更新过（手动 push / 其它 workflow），rebase 后重试，最多 3 次
+          for i in 1 2 3; do
+            if git pull --rebase origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            echo "第 $i 次推送失败，${i}s 后重试..." >&2
+            sleep "$i"
+          done
+          echo "重试 3 次仍失败，请检查远端是否有冲突提交" >&2
+          exit 1
