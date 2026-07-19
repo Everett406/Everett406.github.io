@@ -66,6 +66,23 @@ function enhance(html) {
     '<ul class="task-list"><li><input type="checkbox"'
   );
 
+  // 3) 正文图片懒加载：把 src 换成 data-src，交给前端 IntersectionObserver
+  //    按需加载。同时加 loading="lazy"（双保险，无 JS 时浏览器原生也能懒）
+  //    和 decoding="async"（不阻塞渲染）。class=lazy-img 用于占位骨架 + 淡入。
+  html = html.replace(
+    /<img\b([^>]*?)src=(["'])([^"']+)\2([^>]*)>/gi,
+    (m, pre, q, src, post) => {
+      // 已经处理过（有 data-src）或本就是 data-src 的跳过
+      if (/\bdata-src=/.test(pre + post)) return m;
+      // 合并已有 class（文章图一般没有，但稳妥起见）
+      const clsMatch = (pre + post).match(/\bclass=(["'])(.*?)\1/i);
+      const cls = clsMatch ? `${clsMatch[2]} lazy-img` : 'lazy-img';
+      const preClean = pre.replace(/\sclass=(["']).*?\1/gi, '');
+      const postClean = post.replace(/\sclass=(["']).*?\1/gi, '');
+      return `<img${preClean} data-src=${q}${src}${q} loading="lazy" decoding="async" class="${cls.trim()}"${postClean}>`;
+    }
+  );
+
   return html;
 }
 
