@@ -239,7 +239,7 @@ async function fetchPosts() {
 }
 function postRowHTML(p) {
   const cover = p.cover
-    ? `<span class="pr-cover"><img src="${esc(p.cover)}" alt="" loading="lazy" onerror="this.parentNode.textContent='${esc((p.title || '文')[0])}'"></span>`
+    ? `<span class="pr-cover"><img data-src="${esc(p.cover)}" alt="" loading="lazy" decoding="async" class="lazy-img" onerror="this.parentNode.textContent='${esc((p.title || '文')[0])}'"></span>`
     : `<span class="pr-cover">${esc((p.title || '文')[0])}</span>`;
   return `
     ${cover}
@@ -305,7 +305,7 @@ function renderPostDetail(slug) {
       <div class="detail-meta">
         <a class="dm-link" href="${esc(p.issue_url || '#')}" target="_blank" rel="noopener">在 GitHub 查看原文 ↗</a>
       </div>
-      ${p.cover ? `<img class="detail-cover" src="${esc(p.cover)}" alt="">` : ''}
+      ${p.cover ? `<img class="detail-cover lazy-img" data-src="${esc(p.cover)}" alt="" loading="lazy" decoding="async">` : ''}
     </div>
     <div class="detail-body">${p.html || '<p>（空）</p>'}</div>`);
 }
@@ -354,6 +354,8 @@ function setDetail(html) {
       btn.addEventListener('click', () => go(`/posts?page=${btn.dataset.page}`)));
     // 文章详情里的 <video> 套上自定义播放器皮肤
     initVideoPlayers(detailRoot);
+    // 列表封面 + 详情正文图懒加载
+    initLazyImages(detailRoot);
   }
 }
 
@@ -1118,3 +1120,47 @@ function boot() {
   if (h.startsWith('#/') && h !== '#/') updateRoute(h.slice(1));
 }
 document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', boot) : boot();
+
+/* ── 图片懒加载 ───────────────────────────────────────
+   配合 build-posts.mjs / postRowHTML 里 <img data-src class="lazy-img">
+   的约定：进入视口前 300px 才把 data-src 回填到 src 触发加载，
+   加载完成后加 .loaded 触发淡入。无 IntersectionObserver 时直接全加载。
+   重复调用安全（已加载的 img 会被跳过）。 */
+function initLazyImages(scope = document) {
+  const imgs = $$('.lazy-img', scope).filter(img => !img.dataset.lazyReady);
+  if (!imgs.length) return;
+
+  // 不支持 IntersectionObserver：直接全部加载
+  if (!('IntersectionObserver' in window)) {
+    imgs.forEach(img => {
+      img.src = img.dataset.src || '';
+      img.classList.add('loaded');
+      img.dataset.lazyReady = '1';
+    });
+    return;
+  }
+
+  const io = new IntersectionObserver((entries, obs) => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      const img = en.target;
+      const src = img.dataset.src;
+      if (src) {
+        img.addEventListener('load', () => {
+          img.classList.add('loaded');
+          img.dataset.lazyReady = '1';
+        }, { once: true });
+        img.addEventListener('error', () => {
+          img.classList.add('loaded', 'failed');
+          img.dataset.lazyReady = '1';
+        }, { once: true });
+        img.src = src;
+      } else {
+        img.dataset.lazyReady = '1';
+      }
+      obs.unobserve(img);
+    });
+  }, { rootMargin: '300px 0px', threshold: 0.01 });
+
+  imgs.forEach(img => io.observe(img));
+}
