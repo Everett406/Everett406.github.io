@@ -1,0 +1,38 @@
+name: Issue → Post
+
+# 发 issue、打 post 标签，文章自动发布到博客
+on:
+  issues:
+    types: [opened, edited, closed, reopened, deleted, labeled, unlabeled]
+
+permissions:
+  contents: write
+  issues: read
+
+jobs:
+  build-posts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install marked
+        run: npm i --no-save marked
+
+      - name: Build posts.json
+        run: node scripts/build-posts.mjs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+
+      - name: Commit & push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add posts/posts.json
+          git diff --cached --quiet && echo "no changes" && exit 0
+          git commit -m "chore(posts): sync from issues [skip ci]"
+          git push

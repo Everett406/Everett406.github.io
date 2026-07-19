@@ -3,341 +3,221 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Everett</title>
-<style>
-:root{
-  --bg:#0a0a0f;
-  --fg:#e8e8ec;
-  --muted:#6b6b75;
-  --accent:#ff6b6b;
-  --accent2:#4ecdc4;
-  --line:#1e1e2a;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Noto Sans SC,sans-serif;
-  background:var(--bg);
-  color:var(--fg);
-  line-height:1.7;
-  overflow-x:hidden;
-}
-::selection{background:var(--accent);color:#fff}
-
-.container{max-width:900px;margin:0 auto;padding:0 24px}
-
-/* Noise overlay */
-.noise{
-  position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.03;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* Hero */
-.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative}
-.hero-content{position:relative;z-index:1}
-.hero-badge{
-  display:inline-block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--muted);border:1px solid var(--line);padding:6px 16px;margin-bottom:32px;
-}
-.hero h1{
-  font-size:clamp(2.5rem,8vw,6rem);font-weight:900;line-height:1;
-  letter-spacing:-.02em;margin-bottom:20px;
-}
-.hero h1 .accent{color:var(--accent)}
-.hero-sub{
-  font-size:1.1rem;color:var(--muted);max-width:420px;margin:0 auto 40px;
-}
-.hero-arrow{
-  display:inline-block;width:1px;height:48px;background:var(--line);position:relative;animation:blink 2s infinite;
-}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-
-/* Gradient orbs */
-.orb{
-  position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;opacity:.4;
-}
-.orb-1{width:400px;height:400px;background:var(--accent);top:10%;right:10%;opacity:.15}
-.orb-2{width:300px;height:300px;background:var(--accent2);top:50%;left:5%;opacity:.12}
-.orb-3{width:250px;height:250px;background:#9b59b6;bottom:20%;right:20%;opacity:.1}
-
-/* Section */
-.section{padding:100px 0;position:relative}
-.section-title{
-  font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;margin-bottom:16px;
-  display:flex;align-items:center;gap:12px;
-}
-.section-title::before{
-  content:'';display:block;width:24px;height:2px;background:var(--accent);
-}
-.section-desc{color:var(--muted);font-size:.95rem;margin-bottom:48px}
-
-/* Projects */
-.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
-.project-card{
-  background:var(--line);border:1px solid #2a2a3a;border-radius:12px;
-  padding:28px;transition:all .25s ease;position:relative;overflow:hidden;
-}
-.project-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity .3s;
-}
-.project-card:hover{transform:translateY(-4px);border-color:#3a3a4a}
-.project-card:hover::before{opacity:1}
-.project-card h3{
-  font-size:1.1rem;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:10px;
-}
-.project-card h3::before{
-  content:'';width:8px;height:8px;border-radius:2px;background:var(--accent);display:inline-block;
-}
-.project-card p{
-  font-size:.85rem;color:var(--muted);margin-bottom:16px;line-height:1.6;
-}
-.project-meta{
-  display:flex;gap:8px;flex-wrap:wrap;
-}
-.project-meta span{
-  font-size:.7rem;padding:4px 10px;background:#14141c;border:1px solid #2a2a3a;border-radius:4px;color:var(--muted);
-}
-.project-link{
-  position:absolute;inset:0;z-index:1;
-}
-
-/* Stats */
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:60px}
-.stat-item{text-align:center;padding:24px 0}
-.stat-num{font-size:2.2rem;font-weight:900;color:var(--accent);line-height:1}
-.stat-label{font-size:.75rem;color:var(--muted);margin-top:6px;letter-spacing:.05em}
-
-/* Timeline */
-.timeline{position:relative}
-.timeline-line{
-  position:absolute;left:8px;top:0;bottom:0;width:1px;background:var(--line);
-}
-.timeline-item{
-  display:grid;grid-template-columns:60px 1fr;gap:20px;margin-bottom:32px;position:relative;
-}
-.timeline-dot{
-  width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);
-  position:relative;z-index:1;margin-top:4px;justify-self:center;
-}
-.timeline-content h4{font-size:1rem;font-weight:700;margin-bottom:4px}
-.timeline-content p{font-size:.85rem;color:var(--muted)}
-.timeline-year{font-size:.75rem;color:var(--accent);font-weight:600;letter-spacing:.05em;margin-bottom:4px}
-
-/* Contact */
-.contact{text-align:center;padding:120px 0 60px}
-.contact h2{font-size:clamp(1.5rem,3vw,2.5rem);font-weight:800;margin-bottom:20px}
-.contact-links{display:flex;justify-content:center;gap:16px;margin-top:32px;flex-wrap:wrap}
-.contact-link{
-  color:var(--fg);text-decoration:none;padding:12px 24px;border:1px solid var(--line);border-radius:8px;
-  font-size:.85rem;transition:all .2s;display:inline-flex;align-items:center;gap:8px;
-}
-.contact-link:hover{border-color:var(--accent);background:rgba(255,107,107,.05)}
-
-/* Footer */
-.footer{text-align:center;padding:40px 0;color:var(--muted);font-size:.75rem;border-top:1px solid var(--line)}
-
-/* Reveal */
-.reveal{opacity:0;transform:translateY(30px);transition:all .7s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-/* Responsive */
-@media(max-width:768px){
-  .hero{padding:80px 0}
-  .stats-row{grid-template-columns:repeat(2,1fr)}
-  .section{padding:60px 0}
-  .projects-grid{grid-template-columns:1fr}
-}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none !important;animation:none !important}}
-</style>
-</head>
-<body>
-
-<div class="noise"></div>
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
-
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-badge">Developer / Changsha</div>
-    <h1>Everett<span class="accent">.</span></h1>
-    <p class="hero-sub">代码是笔墨，屏幕是宣纸。<br>在技术的缝隙里寻找美学。</p>
-    <div class="hero-arrow"></div>
-  </div>
-</section>
-
-<div class="container">
-
-<section class="section" id="about">
-  <h2 class="section-title reveal">折腾</h2>
-  <p class="section-desc reveal">人生的意义在于折腾。从 Android 原生到 Flutter 跨端，从 Python 到 Web，在技术的边界持续探索。</p>
-
-  <div class="stats-row">
-    <div class="stat-item reveal">
-      <div class="stat-num">16+</div>
-      <div class="stat-label">开源项目</div>
-    </div>
-    <div class="stat-item reveal">
-      <div class="stat-num">4+</div>
-      <div class="stat-label">技术领域</div>
-    </div>
-    <div class="stat-item reveal">
-      <div class="stat-num">3+</div>
-      <div class="stat-label">年折腾</div>
-    </div>
-    <div class="stat-item reveal">
-      <div class="stat-num">∞</div>
-      <div class="stat-label">好奇心</div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="projects">
-  <h2 class="section-title reveal">项目</h2>
-  <p class="section-desc reveal">一些正在折腾和已经折腾完的东西。</p>
-
-  <div class="projects-grid">
-    <div class="project-card reveal">
-      <a href="https://github.com/Everett406/blind-watermark-android" class="project-link" target="_blank"></a>
-      <h3>隐印</h3>
-      <p>Android 盲水印工具。DWT-DCT-SVD 算法，支持文本/图片/比特数组水印的嵌入与提取。</p>
-      <div class="project-meta">
-        <span>Kotlin</span><span>2026</span>
-      </div>
-    </div>
-
-    <div class="project-card reveal">
-      <a href="https://github.com/Everett406/fengzhi-weather" class="project-link" target="_blank"></a>
-      <h3>风止</h3>
-      <p>气象聚合 Android APP。卫星云图、雷达图、天气预报，一站式。</p>
-      <div class="project-meta">
-        <span>Kotlin</span><span>2026</span>
-      </div>
-    </div>
-
-    <div class="project-card reveal">
-      <a href="https://github.com/Everett406/jiwei-tiku" class="project-link" target="_blank"></a>
-      <h3>积微题库</h3>
-      <p>Capacitor 移动端题库应用。多题型、错题本、进度追踪。</p>
-      <div class="project-meta">
-        <span>JavaScript</span><span>2026</span>
-      </div>
-    </div>
-
-    <div class="project-card reveal">
-      <a href="https://github.com/Everett406/Roll-Call-APP" class="project-link" target="_blank"></a>
-      <h3>点名 APP</h3>
-      <p>Flutter 跨端点名工具。随机点名、分组、记录导出。</p>
-      <div class="project-meta">
-        <span>Dart</span><span>2026</span>
-      </div>
-    </div>
-
-    <div class="project-card reveal">
-      <a href="https://github.com/Everett406/motion-extractor-app" class="project-link" target="_blank"></a>
-      <h3>Motion Extractor</h3>
-      <p>动作提取视频处理器。视觉特效与视频处理工具。</p>
-      <div class="project-meta">
-        <span>Python</span><span>2026</span>
-      </div>
-    </div>
-
-    <div class="project-card reveal">
-      <a href="https://github.com/Everett406/LiveSort-Android" class="project-link" target="_blank"></a>
-      <h3>LiveSort</h3>
-      <p>排序算法可视化。实时动画演示与性能对比。</p>
-      <div class="project-meta">
-        <span>Android</span><span>2026</span>
-      </div>
-    </div>
-
-    <div class="project-card reveal">
-      <a href="https://github.com/Everett406/daily-report" class="project-link" target="_blank"></a>
-      <h3>日报生成</h3>
-      <p>Python 自动化日报生成器。数据抓取、分析、报告输出。</p>
-      <div class="project-meta">
-        <span>Python</span><span>2026</span>
-      </div>
-    </div>
-
-    <div class="project-card reveal">
-      <a href="https://github.com/Everett406/ESP32-Tutorials" class="project-link" target="_blank"></a>
-      <h3>ESP32 教程</h3>
-      <p>Arduino 与 C 语言入门教程。硬件编程从 0 到 1。</p>
-      <div class="project-meta">
-        <span>C++</span><span>2026</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="timeline">
-  <h2 class="section-title reveal">足迹</h2>
-  <p class="section-desc reveal">技术之路，每一步都算数。</p>
-
-  <div class="timeline">
-    <div class="timeline-line"></div>
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-content">
-        <div class="timeline-year">2023</div>
-        <h4>初识 Android</h4>
-        <p>开始学习 Kotlin 与 Android 原生开发，完成第一个练手项目。</p>
-      </div>
-    </div>
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-content">
-        <div class="timeline-year">2024</div>
-        <h4>跨端探索</h4>
-        <p>深入 Flutter 跨端开发，同时探索 Python 自动化与工具开发。</p>
-      </div>
-    </div>
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-content">
-        <div class="timeline-year">2025</div>
-        <h4>全栈尝试</h4>
-        <p>接触 React、TypeScript 与 Node.js，构建 Web 应用与个人主页。</p>
-      </div>
-    </div>
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-content">
-        <div class="timeline-year">2026</div>
-        <h4>持续折腾</h4>
-        <p>16 个开源项目，从 Android 到 Web，从工具到应用，继续探索。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-</div>
-
-<section class="contact" id="contact">
-  <h2>行止由心</h2>
-  <p style="color:var(--muted);font-size:1rem">如果你也对技术充满热情，欢迎交流。</p>
-  <div class="contact-links">
-    <a href="mailto:s060503jh@163.com" class="contact-link">Email</a>
-    <a href="https://github.com/Everett406" class="contact-link" target="_blank">GitHub</a>
-    <a href="https://Everett406.github.io" class="contact-link">Home</a>
-  </div>
-</section>
-
-<div class="footer">
-  <div class="container">
-    © Everett · 2026 · All Rights Reserved
-  </div>
-</div>
-
-<script>
-// Scroll reveal
-const observer=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
-},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+<title>折腾志 · 赴野 Everett</title>
+<meta name="description" content="赴野（Everett）的个人主页 —— 人生的意义在于折腾。项目、足迹、文章与看板。">
+<meta property="og:title" content="折腾志 · 赴野 Everett">
+<meta property="og:description" content="人生的意义在于折腾。">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23c2402a'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='%23f5f1e8' font-family='serif' font-weight='bold'>折</text></svg>">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.7.0/style.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<script type="importmap">
+{ "imports": { "three": "./assets/vendor/three.module.js" } }
 </script>
+</head>
+<body data-route="home">
 
+<!-- 纸纹噪点 -->
+<div class="grain" aria-hidden="true"></div>
+
+<!-- 左侧竖排栏（桌面端） -->
+<aside class="rail" aria-label="站点导航">
+  <a class="rail-brand" href="#/" data-nav>
+    <span class="rail-brand-char">折腾志</span>
+    <span class="rail-brand-en">ZHETENG&nbsp;ZINE</span>
+  </a>
+  <nav class="rail-nav">
+    <a href="#projects" data-scroll><span>项目</span><em>Works</em></a>
+    <a href="#journey" data-scroll><span>足迹</span><em>Journey</em></a>
+    <a href="#posts" data-scroll><span>文章</span><em>Posts</em></a>
+    <a href="#board" data-scroll><span>看板</span><em>Board</em></a>
+    <a href="#about" data-scroll><span>关于</span><em>About</em></a>
+  </nav>
+  <div class="rail-progress" aria-hidden="true"><i id="railProgress"></i></div>
+</aside>
+
+<!-- 顶部栏（移动端） -->
+<header class="topbar">
+  <a class="topbar-brand" href="#/" data-nav>折腾志</a>
+  <button class="topbar-menu-btn" id="menuBtn" aria-label="打开菜单" aria-expanded="false">
+    <span></span><span></span>
+  </button>
+</header>
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <nav>
+    <a href="#projects" data-scroll><i>01</i>项目</a>
+    <a href="#journey" data-scroll><i>02</i>足迹</a>
+    <a href="#posts" data-scroll><i>03</i>文章</a>
+    <a href="#board" data-scroll><i>04</i>看板</a>
+    <a href="#about" data-scroll><i>05</i>关于</a>
+  </nav>
+  <p class="mobile-menu-motto">人生的意义在于折腾</p>
+</div>
+
+<main id="main">
+
+  <!-- ═══════════ 首屏 ═══════════ -->
+  <section class="hero" id="hero">
+    <canvas id="heroCanvas" aria-hidden="true"></canvas>
+    <div class="hero-fallback" aria-hidden="true"><span>折腾</span></div>
+    <div class="hero-inner">
+      <p class="hero-kicker reveal">Everett's Field Notes — Vol.2026</p>
+      <h1 class="hero-title">
+        <span class="hero-char" data-char="折">折</span>
+        <span class="hero-char" data-char="腾">腾</span>
+      </h1>
+      <p class="hero-sub reveal">
+        <strong>赴野</strong>，也叫 Everett。<br>
+        人生的意义在于折腾 —— 从 Android 原生到跨端，从 Python 到 Web，<br class="br-pc">
+        在技术的边界上，持续地、笨拙地、兴致勃勃地探索。
+      </p>
+      <div class="hero-stats reveal" id="heroStats">
+        <div class="stat"><b data-count="16">0</b><span>开源项目</span></div>
+        <div class="stat"><b data-count="479">0</b><span>红心歌曲</span></div>
+        <div class="stat"><b data-count="3">0</b><span>年折腾</span></div>
+        <div class="stat"><b data-count="0" data-fixed="∞">∞</b><span>好奇心</span></div>
+      </div>
+    </div>
+    <div class="seal hero-seal reveal" aria-hidden="true"><span>折腾</span></div>
+    <a class="hero-hint" href="#projects" data-scroll aria-label="向下滚动">
+      <span>向下翻阅</span><i></i>
+    </a>
+  </section>
+
+  <!-- ═══════════ 01 项目 ═══════════ -->
+  <section class="section" id="projects">
+    <header class="section-head reveal">
+      <div class="section-no">01</div>
+      <h2 class="section-title">项目<em>Works</em></h2>
+      <p class="section-desc">一些正在折腾的，和已经折腾完的。点开任意一张卡片，看看背后的故事。</p>
+    </header>
+    <div class="project-grid" id="projectGrid"><!-- JS 渲染 --></div>
+  </section>
+
+  <!-- ═══════════ 02 足迹 ═══════════ -->
+  <section class="section" id="journey">
+    <header class="section-head reveal">
+      <div class="section-no">02</div>
+      <h2 class="section-title">足迹<em>Journey</em></h2>
+      <p class="section-desc">技术之路，每一步都算数。</p>
+    </header>
+    <div class="timeline" id="timeline">
+      <div class="timeline-line" aria-hidden="true"><i id="timelineFill"></i></div>
+      <!-- JS 渲染 -->
+    </div>
+  </section>
+
+  <!-- ═══════════ 03 文章 ═══════════ -->
+  <section class="section" id="posts">
+    <header class="section-head reveal">
+      <div class="section-no">03</div>
+      <h2 class="section-title">文章<em>Posts</em></h2>
+      <p class="section-desc">在这里写字。说一句悄悄话：这个博客是靠发 GitHub Issue 更新的 —— 打个 <code>post</code> 标签，文章就自己长出来了。</p>
+    </header>
+    <div class="post-list" id="postList"><!-- JS 渲染 --></div>
+  </section>
+
+  <!-- ═══════════ 04 看板 ═══════════ -->
+  <section class="section" id="board">
+    <header class="section-head reveal">
+      <div class="section-no">04</div>
+      <h2 class="section-title">折腾看板<em>Dashboard</em></h2>
+      <p class="section-desc">一些实时跳动的数字。数据来自开放接口，加载不出来的时候 —— 那就让它安静一会儿。</p>
+    </header>
+    <div class="board-grid">
+      <div class="board-card board-time reveal" id="boardTime">
+        <h3><span>⏳</span>时间进度</h3>
+        <div class="time-bars" id="timeBars"><!-- JS 渲染 --></div>
+        <p class="board-foot" id="nextHoliday"></p>
+      </div>
+      <div class="board-card board-weather reveal" id="boardWeather">
+        <h3><span>🌤️</span>长沙天气</h3>
+        <div class="weather-body" id="weatherBody"><p class="board-loading">正在观测天空……</p></div>
+      </div>
+      <div class="board-card board-github reveal" id="boardGithub">
+        <h3><span>📦</span>GitHub</h3>
+        <div class="github-body" id="githubBody"><p class="board-loading">正在数星星……</p></div>
+      </div>
+      <div class="board-card board-quote reveal" id="boardQuote">
+        <h3><span>💬</span>一言</h3>
+        <blockquote id="quoteBody"><p class="board-loading">正在想一句好的话……</p></blockquote>
+      </div>
+      <div class="board-card board-heat reveal" id="boardHeat">
+        <h3><span>🔥</span>提交热图</h3>
+        <div class="heat-body" id="heatBody"><p class="board-loading">正在铺格子……</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 05 关于 ═══════════ -->
+  <section class="section" id="about">
+    <header class="section-head reveal">
+      <div class="section-no">05</div>
+      <h2 class="section-title">关于<em>About</em></h2>
+    </header>
+    <div class="about-grid">
+      <div class="about-main reveal">
+        <p class="about-lede">我是<strong>赴野</strong>，英文名 <strong>Everett</strong>，一个在长沙上学、把课余时间都献给代码的人。</p>
+        <p>读的是工科，写的是 Android、Flutter、Python 和 Web。INTJ，不熬夜，爱规划，偶尔也执行。相信「终身学习」不是口号，是一种日常姿势。</p>
+        <p>对音乐的依赖可能超过了「爱好」的范畴 —— 红心歌单里躺着 <strong>479</strong> 首歌，跨越 446 天、将近 32 个小时。从 AJR 到 Audiomachine，从阿肆到刘烨溦，风格很杂，但每一首都是某个时刻与自己的秘密握手。</p>
+        <blockquote class="about-quote">「在耳机里造一个宇宙，然后独自居住。」</blockquote>
+      </div>
+      <div class="about-side reveal">
+        <h4>找到我</h4>
+        <ul class="contact-list">
+          <li><a href="https://github.com/Everett406" target="_blank" rel="noopener"><span>GitHub</span><em>github.com/Everett406</em></a></li>
+          <li><a href="mailto:s060503jh@163.com"><span>邮箱</span><em>s060503jh@163.com</em></a></li>
+          <li><a href="https://github.com/Everett406/Everett406.github.io/issues" target="_blank" rel="noopener"><span>私信</span><em>去 Issues 里留言</em></a></li>
+        </ul>
+        <h4>此刻在听</h4>
+        <p class="about-music-note">右下角有一台小唱机。<br>里面的歌，来自我的红心歌单。</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="seal footer-seal" aria-hidden="true"><span>折腾</span></div>
+    <p class="footer-motto">「人生的意义在于折腾。」</p>
+    <p class="footer-meta">© 2026 赴野 Everett · 手工打磨，无框架，部署于 GitHub Pages</p>
+  </footer>
+
+</main>
+
+<!-- 详情页容器（路由视图） -->
+<div id="detailRoot" class="detail-root" aria-hidden="true"></div>
+
+<!-- 黑胶唱机 -->
+<div class="vinyl" id="vinyl" data-state="idle">
+  <button class="vinyl-disc" id="vinylToggle" aria-label="播放 / 暂停音乐" aria-expanded="false">
+    <span class="vinyl-label" id="vinylLabel">♪</span>
+    <span class="vinyl-shine"></span>
+  </button>
+  <div class="vinyl-panel" id="vinylPanel" aria-hidden="true">
+    <div class="vinyl-now">
+      <span class="vinyl-now-tag">NOW PLAYING</span>
+      <span class="vinyl-now-title" id="vinylTitle">——</span>
+    </div>
+    <div class="vinyl-controls">
+      <button id="vinylPrev" aria-label="上一首">⏮</button>
+      <button id="vinylPlay" aria-label="播放 / 暂停">▶</button>
+      <button id="vinylNext" aria-label="下一首">⏭</button>
+    </div>
+    <div class="vinyl-progress"><i id="vinylProg"></i></div>
+    <button class="vinyl-list-btn" id="vinylListBtn">歌单 <span id="vinylCount"></span></button>
+    <ul class="vinyl-list" id="vinylList"></ul>
+  </div>
+</div>
+
+<noscript>
+<style>.reveal{opacity:1!important;transform:none!important}.vinyl,.rail-progress{display:none}</style>
+<p style="text-align:center;padding:1em">这个站点的动效与 3D 需要 JavaScript，但内容你都能看。</p>
+</noscript>
+
+<script src="assets/vendor/lenis.min.js" defer></script>
+<script src="assets/vendor/gsap.min.js" defer></script>
+<script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+<script src="assets/js/main.js" defer></script>
+<script src="assets/js/hero3d.js" type="module"></script>
 </body>
 </html>
