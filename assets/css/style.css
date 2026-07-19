@@ -611,11 +611,80 @@ main { margin-left: var(--rail-w); }
 /* 图片 */
 .detail-body img { max-width: 100%; border-radius: 6px; border: 1px solid var(--ink-12); }
 
-/* 视频：自适应宽度、圆角 */
-.detail-body video {
-  display: block; max-width: 100%; margin: 18px 0;
+/* 视频：自定义播放器皮肤（朱砂书卷风） */
+.detail-body video { display: block; max-width: 100%; }
+.ztz-video {
+  position: relative; display: block; max-width: 100%; margin: 18px 0;
   border-radius: 8px; border: 1px solid var(--ink-12); background: var(--ink);
+  overflow: hidden; isolation: isolate;
 }
+.ztz-video video { display: block; width: 100%; max-height: 70vh; background: var(--ink); }
+.ztz-video.fs { border: 0; border-radius: 0; }
+.ztz-video.fs video { max-height: 100vh; }
+
+/* 控制条：默认隐藏，hover/focus/暂停时浮现 */
+.ztz-vbar {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px 12px;
+  background: linear-gradient(to top, rgba(20, 18, 15, .82), rgba(20, 18, 15, .35) 70%, transparent);
+  color: var(--paper);
+  opacity: 0; transition: opacity .25s ease;
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .04em;
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+}
+.ztz-video:hover .ztz-vbar,
+.ztz-video .ztz-vbar:focus-within,
+.ztz-video:not(.playing) .ztz-vbar { opacity: 1; }
+
+/* 按钮 */
+.ztz-vbar button {
+  flex-shrink: 0; width: 30px; height: 30px; display: grid; place-items: center;
+  color: var(--paper); background: none; border: 0; cursor: pointer;
+  border-radius: 50%; transition: color .2s, background .2s, transform .2s;
+}
+.ztz-vbar button:hover { color: var(--cinnabar); background: rgba(245, 241, 232, .1); }
+.ztz-vbar button:active { transform: scale(.92); }
+.ztz-vbar button svg { width: 18px; height: 18px; fill: currentColor; }
+/* 播放/暂停图标切换 */
+.ztz-video .ic-pause { display: none; }
+.ztz-video.playing .ic-play { display: none; }
+.ztz-video.playing .ic-pause { display: block; }
+/* 静音图标切换 */
+.ztz-video .ic-mute { display: none; }
+.ztz-vm[aria-pressed="true"] .ic-vol { display: none; }
+.ztz-vm[aria-pressed="true"] .ic-mute { display: block; }
+
+/* 时长 */
+.ztz-vt { color: var(--paper); opacity: .85; font-variant-numeric: tabular-nums; min-width: 38px; text-align: center; }
+
+/* 进度条 */
+.ztz-vseek {
+  position: relative; flex: 1; height: 16px; display: flex; align-items: center;
+  cursor: pointer; outline: none;
+}
+.ztz-vseek::before {
+  content: ""; position: absolute; left: 0; right: 0; height: 3px;
+  background: rgba(245, 241, 232, .22); border-radius: 2px;
+}
+.ztz-vbuf { position: absolute; left: 0; height: 3px; width: 0; background: rgba(245, 241, 232, .4); border-radius: 2px; }
+.ztz-vfill { position: absolute; left: 0; height: 3px; width: 0; background: var(--cinnabar); border-radius: 2px; }
+.ztz-vknob {
+  position: absolute; left: 0; width: 11px; height: 11px; margin-left: -5.5px;
+  border-radius: 50%; background: var(--cinnabar);
+  box-shadow: 0 0 0 2px rgba(245, 241, 232, .25);
+  opacity: 0; transition: opacity .15s, transform .15s;
+}
+.ztz-vseek:hover .ztz-vknob, .ztz-vseek:focus-visible .ztz-vknob { opacity: 1; }
+.ztz-vseek:hover .ztz-vknob { transform: scale(1.15); }
+.ztz-vseek:focus-visible { outline: 2px solid var(--cinnabar); outline-offset: 4px; border-radius: 8px; }
+
+/* 加载失败兜底：src 无效时不留大白块 */
+.ztz-video video:not([src]), .ztz-video video[src=""] { aspect-ratio: 16/9; }
+
+/* 暗色主题下控制条配色微调 */
+[data-theme="dark"] .ztz-vbar { background: linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.4) 70%, transparent); }
+[data-theme="dark"] .ztz-vbar button:hover { background: rgba(245, 241, 232, .08); }
 
 /* 表格 */
 .detail-body table {
