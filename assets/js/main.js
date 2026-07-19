@@ -352,7 +352,132 @@ function setDetail(html) {
       row.addEventListener('click', () => go(`/post/${row.dataset.slug}`)));
     $$('.archive-pager button', detailRoot).forEach(btn =>
       btn.addEventListener('click', () => go(`/posts?page=${btn.dataset.page}`)));
+    // 文章详情里的 <video> 套上自定义播放器皮肤
+    initVideoPlayers(detailRoot);
   }
+}
+
+/* ── 自定义视频播放器皮肤 ───────────────────────────────
+   把 .detail-body video 包进 .ztz-video，隐藏原生 controls，
+   注入朱砂书卷风控制条：播放/暂停、进度、时长、音量、全屏。
+   只依赖 $ / $$ / el。重复调用安全（已初始化的会跳过）。 */
+function initVideoPlayers(scope = document) {
+  $$('.detail-body video', scope).forEach(v => {
+    if (v.closest('.ztz-video') || v.dataset.ztzReady) return;
+    // 只处理带原生 controls 的（我们渲染产物默认带），改造时移除原生控件
+    const hadNative = v.hasAttribute('controls');
+    v.removeAttribute('controls');
+    v.preload = 'metadata';
+
+    const wrap = el('div', 'ztz-video');
+    v.parentNode.insertBefore(wrap, v);
+    wrap.appendChild(v);
+
+    // 控制条
+    const bar = el('div', 'ztz-vbar');
+    bar.innerHTML = `
+      <button class="ztz-vp" type="button" aria-label="播放/暂停">
+        <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+      </button>
+      <span class="ztz-vt ztz-vcur">0:00</span>
+      <div class="ztz-vseek" role="slider" aria-label="进度" tabindex="0">
+        <i class="ztz-vbuf"></i><i class="ztz-vfill"></i><i class="ztz-vknob"></i>
+      </div>
+      <span class="ztz-vt ztz-vdur">0:00</span>
+      <button class="ztz-vm" type="button" aria-label="静音/取消" aria-pressed="false">
+        <svg class="ic-vol" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
+        <svg class="ic-mute" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13 0 5 5m0-5l-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <button class="ztz-vf" type="button" aria-label="全屏">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3H3v4M17 3h4v4M7 21H3v-4M17 21h4v-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>`;
+    wrap.appendChild(bar);
+
+    const btnPlay = $('.ztz-vp', bar);
+    const btnMute = $('.ztz-vm', bar);
+    const btnFull = $('.ztz-vf', bar);
+    const seek = $('.ztz-vseek', bar);
+    const fill = $('.ztz-vfill', seek);
+    const buf = $('.ztz-vbuf', seek);
+    const knob = $('.ztz-vknob', seek);
+    const cur = $('.ztz-vcur', bar);
+    const dur = $('.ztz-vdur', bar);
+
+    const fmt = s => {
+      s = Math.max(0, Math.floor(s || 0));
+      const m = Math.floor(s / 60), r = s % 60;
+      return `${m}:${r < 10 ? '0' : ''}${r}`;
+    };
+    const pct = (ratio) => `${(Math.min(1, Math.max(0, ratio)) * 100).toFixed(2)}%`;
+
+    const syncPlay = () => {
+      wrap.classList.toggle('playing', !v.paused);
+      btnPlay.setAttribute('aria-label', v.paused ? '播放' : '暂停');
+    };
+    const syncMute = () => {
+      btnMute.classList.toggle('on', !v.muted && v.volume > 0);
+      btnMute.setAttribute('aria-pressed', String(v.muted));
+    };
+    const syncProgress = () => {
+      const r = v.duration ? v.currentTime / v.duration : 0;
+      fill.style.width = pct(r);
+      knob.style.left = pct(r);
+      cur.textContent = fmt(v.currentTime);
+    };
+
+    btnPlay.addEventListener('click', () => v[v.paused ? 'play' : 'pause']());
+    v.addEventListener('play', syncPlay);
+    v.addEventListener('pause', syncPlay);
+    v.addEventListener('loadedmetadata', () => { dur.textContent = fmt(v.duration); });
+    v.addEventListener('timeupdate', syncProgress);
+    v.addEventListener('volumechange', syncMute);
+    v.addEventListener('ended', syncPlay);
+    v.addEventListener('progress', () => {
+      if (v.buffered.length && v.duration) buf.style.width = pct(v.buffered.end(v.buffered.length - 1) / v.duration);
+    });
+
+    // 点击/拖动进度条
+    let dragging = false;
+    const seekTo = e => {
+      const rect = seek.getBoundingClientRect();
+      const r = (e.clientX - rect.left) / rect.width;
+      if (v.duration) v.currentTime = r * v.duration;
+    };
+    seek.addEventListener('pointerdown', e => {
+      dragging = true; seek.setPointerCapture(e.pointerId); seekTo(e);
+    });
+    seek.addEventListener('pointermove', e => dragging && seekTo(e));
+    seek.addEventListener('pointerup', e => { dragging = false; try { seek.releasePointerCapture(e.pointerId); } catch {} });
+    seek.addEventListener('keydown', e => {
+      if (!v.duration) return;
+      const step = e.shiftKey ? 10 : 5;
+      if (e.key === 'ArrowLeft') { v.currentTime = Math.max(0, v.currentTime - step); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { v.currentTime = Math.min(v.duration, v.currentTime + step); e.preventDefault(); }
+    });
+
+    // 音量按钮：点一下静音切换
+    btnMute.addEventListener('click', () => { v.muted = !v.muted; });
+
+    // 全屏
+    btnFull.addEventListener('click', () => {
+      const inFs = document.fullscreenElement === wrap;
+      if (inFs) document.exitFullscreen(); else wrap.requestFullscreen?.();
+    });
+    document.addEventListener('fullscreenchange', () => {
+      wrap.classList.toggle('fs', document.fullscreenElement === wrap);
+    });
+
+    // 点击视频本体也播放/暂停（原生体验）
+    v.addEventListener('click', () => v[v.paused ? 'play' : 'pause']());
+
+    // 初始状态
+    syncPlay(); syncMute(); syncProgress();
+    if (!hadNative) {
+      // 没有原生控件的视频也保持自定义控件可见
+    }
+    v.dataset.ztzReady = '1';
+  });
 }
 
 function updateRoute(path) {
