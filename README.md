@@ -5,7 +5,7 @@
 赴野（Everett）的个人主页 —— 手工打磨、无框架、部署于 GitHub Pages。
 站点地址：<https://everett406.github.io>
 
-当前版本：**v1.2.0**（通过 GitHub Releases 标记版本）
+当前版本：**v1.3.0**（通过 GitHub Releases 标记版本）
 
 ## 结构
 
@@ -32,6 +32,16 @@
 关闭 / 删除 issue 或去掉 `post` 标签，对应文章会自动从列表里消失。也可以在 Actions 页面手动触发（`workflow_dispatch`）重新同步。
 
 工作流使用 `concurrency.group: issue-post` 串行化，避免同一 issue 的多个事件并发推送互相拒绝；推送失败时还会 `pull --rebase` 重试。
+
+## 图片懒加载
+
+站点所有图片（列表封面、详情大封面、正文插图）都启用了懒加载：
+
+- **构建端**：`build-posts.mjs` 把正文 `<img src>` 转成 `<img data-src loading="lazy" decoding="async" class="lazy-img">`，列表/详情封面同理。
+- **前端**：`main.js` 的 `initLazyImages` 用 `IntersectionObserver` 监听，图片进入视口前 300px 才把 `data-src` 回填 `src` 触发加载，加载完成后加 `.loaded` 触发淡入；不支持 `IntersectionObserver` 的浏览器直接全加载，`loading="lazy"` 作为原生兜底。
+- **视觉**：加载前显示 shimmer 骨架渐变占位，加载完 0.45s 淡入，失败显示灰底；`prefers-reduced-motion` 下关闭动画。
+
+这样图多的时候首屏不会一次性请求所有图片，滚动到才加载。
 
 ## Markdown 写作约定
 
