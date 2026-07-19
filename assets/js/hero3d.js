@@ -37,13 +37,29 @@ async function initHero() {
   camera.position.set(0, 0, isMobile ? 17 : 15);
 
   /* ── 灯光 ── */
-  scene.add(new THREE.AmbientLight(0xfff6e8, 1.15));
+  const ambient = new THREE.AmbientLight(0xfff6e8, 1.15);
+  scene.add(ambient);
   const key = new THREE.DirectionalLight(0xffe9c9, 1.6);
   key.position.set(6, 8, 10);
   scene.add(key);
   const rim = new THREE.DirectionalLight(0xc2402a, 0.35);
   rim.position.set(-8, -4, -6);
   scene.add(rim);
+
+  /* ── 主题同步（墨黑书卷 ↔ 夜色场景） ── */
+  const THEME_3D = {
+    light: { paper: 0xf5f1e8, amb: 1.15, key: 1.6, rim: 0.35 },
+    dark:  { paper: 0x17140e, amb: 0.55, key: 2.0, rim: 0.6 },
+  };
+  function applyTheme(t) {
+    const c = THEME_3D[t] || THEME_3D.light;
+    scene.fog.color.setHex(c.paper);
+    ambient.intensity = c.amb;
+    key.intensity = c.key;
+    rim.intensity = c.rim;
+  }
+  applyTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+  addEventListener('ztz:theme', e => applyTheme(e.detail));
 
   /* ── 纹理 ── */
   const WOOD_TONES = ['#c0a377', '#b3946a', '#a98a5f', '#937850', '#bfa98b', '#8d7350'];

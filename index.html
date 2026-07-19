@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* 主题初始化（防闪烁）：localStorage > 系统偏好 */
+(function(){var t=localStorage.getItem('ztz-theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;})();
+</script>
 <title>折腾志 · 赴野 Everett</title>
 <meta name="description" content="赴野（Everett）的个人主页 —— 人生的意义在于折腾。项目、足迹、文章与看板。">
 <meta property="og:title" content="折腾志 · 赴野 Everett">
@@ -35,14 +39,18 @@
     <a href="#about" data-scroll><span>关于</span><em>About</em></a>
   </nav>
   <div class="rail-progress" aria-hidden="true"><i id="railProgress"></i></div>
+  <button class="theme-toggle" data-theme-toggle aria-label="切换明暗主题"><span class="tt-light">暗</span><span class="tt-dark">明</span></button>
 </aside>
 
 <!-- 顶部栏（移动端） -->
 <header class="topbar">
   <a class="topbar-brand" href="#/" data-nav>折腾志</a>
-  <button class="topbar-menu-btn" id="menuBtn" aria-label="打开菜单" aria-expanded="false">
-    <span></span><span></span>
-  </button>
+  <div class="topbar-actions">
+    <button class="theme-toggle" data-theme-toggle aria-label="切换明暗主题"><span class="tt-light">暗</span><span class="tt-dark">明</span></button>
+    <button class="topbar-menu-btn" id="menuBtn" aria-label="打开菜单" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
 </header>
 <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
   <nav>
@@ -85,8 +93,11 @@
     </a>
   </section>
 
+  <div class="stitch" data-no="壹" aria-hidden="true"></div>
+
   <!-- ═══════════ 01 项目 ═══════════ -->
   <section class="section" id="projects">
+    <div class="section-bg" aria-hidden="true">造物</div>
     <header class="section-head reveal">
       <div class="section-no">01</div>
       <h2 class="section-title">项目<em>Works</em></h2>
@@ -95,8 +106,11 @@
     <div class="project-grid" id="projectGrid"><!-- JS 渲染 --></div>
   </section>
 
+  <div class="stitch" data-no="贰" aria-hidden="true"></div>
+
   <!-- ═══════════ 02 足迹 ═══════════ -->
   <section class="section" id="journey">
+    <div class="section-bg" aria-hidden="true">足迹</div>
     <header class="section-head reveal">
       <div class="section-no">02</div>
       <h2 class="section-title">足迹<em>Journey</em></h2>
@@ -108,18 +122,27 @@
     </div>
   </section>
 
+  <div class="stitch" data-no="叁" aria-hidden="true"></div>
+
   <!-- ═══════════ 03 文章 ═══════════ -->
   <section class="section" id="posts">
+    <div class="section-bg" aria-hidden="true">笔墨</div>
     <header class="section-head reveal">
       <div class="section-no">03</div>
       <h2 class="section-title">文章<em>Posts</em></h2>
       <p class="section-desc">在这里写字。说一句悄悄话：这个博客是靠发 GitHub Issue 更新的 —— 打个 <code>post</code> 标签，文章就自己长出来了。</p>
     </header>
     <div class="post-list" id="postList"><!-- JS 渲染 --></div>
+    <div class="post-more reveal" id="postMore" hidden>
+      <a href="#/posts" data-archive>全部文章 <i>→</i></a>
+    </div>
   </section>
+
+  <div class="stitch" data-no="肆" aria-hidden="true"></div>
 
   <!-- ═══════════ 04 看板 ═══════════ -->
   <section class="section" id="board">
+    <div class="section-bg" aria-hidden="true">观象</div>
     <header class="section-head reveal">
       <div class="section-no">04</div>
       <h2 class="section-title">折腾看板<em>Dashboard</em></h2>
@@ -127,31 +150,34 @@
     </header>
     <div class="board-grid">
       <div class="board-card board-time reveal" id="boardTime">
-        <h3><span>⏳</span>时间进度</h3>
+        <h3><svg viewBox="0 0 24 24" class="ic"><path d="M6 3h12M6 21h12M7 3c0 4 4 5 5 6-1 1-5 2-5 6M17 3c0 4-4 5-5 6 1 1 5 2 5 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>时间进度</h3>
         <div class="time-bars" id="timeBars"><!-- JS 渲染 --></div>
         <p class="board-foot" id="nextHoliday"></p>
       </div>
       <div class="board-card board-weather reveal" id="boardWeather">
-        <h3><span>🌤️</span>长沙天气</h3>
+        <h3><svg viewBox="0 0 24 24" class="ic"><path d="M7 17a4.5 4.5 0 1 1 .9-8.9A5.5 5.5 0 0 1 18.5 10 3.5 3.5 0 0 1 18 17H7Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M9 20l1 1.5M14 20l1 1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span id="weatherTitle">你那边 · 天气</span></h3>
         <div class="weather-body" id="weatherBody"><p class="board-loading">正在观测天空……</p></div>
       </div>
       <div class="board-card board-github reveal" id="boardGithub">
-        <h3><span>📦</span>GitHub</h3>
+        <h3><svg viewBox="0 0 24 24" class="ic"><path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5Z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 8h8M8 12h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>GitHub</h3>
         <div class="github-body" id="githubBody"><p class="board-loading">正在数星星……</p></div>
       </div>
       <div class="board-card board-quote reveal" id="boardQuote">
-        <h3><span>💬</span>一言</h3>
+        <h3><svg viewBox="0 0 24 24" class="ic"><path d="M5 16c-1 0-2-1-2-2.5S4 8 9 6l.6 1.4C7 9 6 11 6.5 12c.2-.1.6-.2 1-.2 1.4 0 2.5 1 2.5 2.3S8.9 18 7.5 18 5 17 5 16Zm10 0c0 1 1 2 2.5 2s2.5-1.7 2.5-3.9S19 8 15 6l-.6 1.4C17 9 18 11 17.5 12c.2.1-.6.2-1 .2-1.4 0-2.5 1-2.5 2.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" transform="scale(-1,1) translate(-24,0)"/></svg>一言</h3>
         <blockquote id="quoteBody"><p class="board-loading">正在想一句好的话……</p></blockquote>
       </div>
       <div class="board-card board-heat reveal" id="boardHeat">
-        <h3><span>🔥</span>提交热图</h3>
+        <h3><svg viewBox="0 0 24 24" class="ic"><path d="M12 21c-3.5 0-6-2.4-6-5.5 0-2.5 1.7-4.3 3-6 1.2-1.5 2-3 2-5.5 2 1 3 2.8 3 4.5 1-.5 1.5-1.3 1.7-2.3 1.6 1.4 2.3 3.4 2.3 5.3 0 5-2.5 9.5-6 9.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>近 12 周的活动</h3>
         <div class="heat-body" id="heatBody"><p class="board-loading">正在铺格子……</p></div>
       </div>
     </div>
   </section>
 
+  <div class="stitch" data-no="伍" aria-hidden="true"></div>
+
   <!-- ═══════════ 05 关于 ═══════════ -->
   <section class="section" id="about">
+    <div class="section-bg" aria-hidden="true">赴野</div>
     <header class="section-head reveal">
       <div class="section-no">05</div>
       <h2 class="section-title">关于<em>About</em></h2>
@@ -177,7 +203,6 @@
   </section>
 
   <footer class="footer">
-    <div class="seal footer-seal" aria-hidden="true"><span>折腾</span></div>
     <p class="footer-motto">「人生的意义在于折腾。」</p>
     <p class="footer-meta">© 2026 赴野 Everett · 手工打磨，无框架，部署于 GitHub Pages</p>
   </footer>
@@ -185,29 +210,52 @@
 </main>
 
 <!-- 详情页容器（路由视图） -->
-<div id="detailRoot" class="detail-root" aria-hidden="true"></div>
+<div id="detailRoot" class="detail-root" aria-hidden="true" data-lenis-prevent></div>
 
 <!-- 黑胶唱机 -->
 <div class="vinyl" id="vinyl" data-state="idle">
+  <!-- 播放中收起态：迷你播放栏 -->
+  <button class="vinyl-bar" id="vinylBar" aria-label="展开播放器">
+    <span class="vb-cover" id="vinylBarCover"><i>♪</i></span>
+    <span class="vb-text">
+      <b id="vinylBarTitle">——</b>
+      <i id="vinylBarLyric"></i>
+    </span>
+    <span class="vb-eq" aria-hidden="true"><u></u><u></u><u></u></span>
+  </button>
   <button class="vinyl-disc" id="vinylToggle" aria-label="播放 / 暂停音乐" aria-expanded="false">
+    <svg class="vinyl-ring" viewBox="0 0 58 58" aria-hidden="true">
+      <circle class="vr-track" cx="29" cy="29" r="26.5"/>
+      <circle class="vr-fill" id="vinylRing" cx="29" cy="29" r="26.5"/>
+    </svg>
     <span class="vinyl-label" id="vinylLabel">♪</span>
     <span class="vinyl-shine"></span>
   </button>
-  <div class="vinyl-panel" id="vinylPanel" aria-hidden="true">
-    <div class="vinyl-now">
-      <span class="vinyl-now-tag">NOW PLAYING</span>
-      <span class="vinyl-now-title" id="vinylTitle">——</span>
+  <div class="vinyl-panel" id="vinylPanel" aria-hidden="true" data-lenis-prevent>
+    <div class="vinyl-head">
+      <span class="vinyl-cover" id="vinylCover"><i>♪</i></span>
+      <div class="vinyl-now">
+        <span class="vinyl-now-tag">NOW PLAYING</span>
+        <span class="vinyl-now-title" id="vinylTitle">——</span>
+        <span class="vinyl-time" id="vinylTime">0:00 / 0:00</span>
+      </div>
     </div>
     <div class="vinyl-controls">
+      <button id="vinylMode" aria-label="播放模式" title="顺序播放">⇢</button>
       <button id="vinylPrev" aria-label="上一首">⏮</button>
       <button id="vinylPlay" aria-label="播放 / 暂停">▶</button>
       <button id="vinylNext" aria-label="下一首">⏭</button>
     </div>
     <div class="vinyl-progress"><i id="vinylProg"></i></div>
+    <div class="vinyl-lyric" id="vinylLyric" aria-live="polite"></div>
     <button class="vinyl-list-btn" id="vinylListBtn">歌单 <span id="vinylCount"></span></button>
     <ul class="vinyl-list" id="vinylList"></ul>
   </div>
 </div>
+
+<!-- 自定义光标 -->
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
 
 <noscript>
 <style>.reveal{opacity:1!important;transform:none!important}.vinyl,.rail-progress{display:none}</style>

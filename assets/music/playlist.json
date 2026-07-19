@@ -3,172 +3,237 @@
   {
    "file": "track01.mp3",
    "title": "Angel Voices",
-   "artist": "AxR"
+   "artist": "AxR",
+   "cover": "covers/track01.jpg"
   },
   {
    "file": "track03.mp3",
    "title": "Call of Silence",
-   "artist": "Clear Sky"
+   "artist": "Clear Sky",
+   "cover": "covers/track03.jpg",
+   "lyrics": "lyrics/track03.lrc"
   },
   {
    "file": "track05.mp3",
    "title": "Father's Land",
-   "artist": "Jordan Critz"
+   "artist": "Jordan Critz",
+   "cover": "covers/track05.jpg",
+   "lyrics": "lyrics/track05.lrc"
   },
   {
    "file": "track06.mp3",
    "title": "Heaven Down",
-   "artist": "ROARY_Tim Halperin"
+   "artist": "ROARY_Tim Halperin",
+   "cover": "covers/track06.jpg",
+   "lyrics": "lyrics/track06.lrc"
   },
   {
    "file": "track07.mp3",
    "title": "III",
-   "artist": "Athletics"
+   "artist": "Athletics",
+   "cover": "covers/track07.jpg",
+   "lyrics": "lyrics/track07.lrc"
   },
   {
    "file": "track08.mp3",
    "title": "Last Chance (Alternate Instrumental)",
-   "artist": "CHPTRS"
+   "artist": "CHPTRS",
+   "cover": "covers/track08.jpg"
   },
   {
    "file": "track09.mp3",
    "title": "Missing Pieces",
-   "artist": "flawed mangoes"
+   "artist": "flawed mangoes",
+   "cover": "covers/track09.jpg",
+   "lyrics": "lyrics/track09.lrc"
   },
   {
    "file": "track10.mp3",
    "title": "No Grass Today (Instrumental)",
-   "artist": "Piano Dreamers"
+   "artist": "Piano Dreamers",
+   "cover": "covers/track10.jpg"
   },
   {
    "file": "track12.mp3",
    "title": "Remembrance",
-   "artist": "Balmorhea"
+   "artist": "Balmorhea",
+   "cover": "covers/track12.jpg",
+   "lyrics": "lyrics/track12.lrc"
   },
   {
    "file": "track13.mp3",
    "title": "Sacred Play Secret Place",
-   "artist": "Matryoshka"
+   "artist": "Matryoshka",
+   "cover": "covers/track13.jpg",
+   "lyrics": "lyrics/track13.lrc"
   },
   {
    "file": "track14.mp3",
    "title": "September",
-   "artist": "PeterBence"
+   "artist": "PeterBence",
+   "cover": "covers/track14.jpg",
+   "lyrics": "lyrics/track14.lrc"
   },
   {
    "file": "track15.mp3",
    "title": "Shadow Of The Sun",
-   "artist": "王OK"
+   "artist": "王OK",
+   "cover": "covers/track15.jpg",
+   "lyrics": "lyrics/track15.lrc"
   },
   {
    "file": "track16.mp3",
    "title": "Traffic Light",
-   "artist": "Rival_ORKID"
+   "artist": "Rival_ORKID",
+   "cover": "covers/track16.jpg",
+   "lyrics": "lyrics/track16.lrc"
   },
   {
    "file": "track17.mp3",
    "title": "“diary”（RnB type beat）",
-   "artist": "47号（No.FortySeven)"
+   "artist": "47号（No.FortySeven)",
+   "cover": "covers/track17.jpg",
+   "lyrics": "lyrics/track17.lrc"
   },
   {
    "file": "track18.mp3",
    "title": "一半一半",
-   "artist": "马晓波_知晏"
+   "artist": "马晓波_知晏",
+   "cover": "covers/track18.jpg",
+   "lyrics": "lyrics/track18.lrc"
   },
   {
    "file": "track20.mp3",
    "title": "下一站，无畏",
-   "artist": "Vicky宣宣"
+   "artist": "Vicky宣宣",
+   "cover": "covers/track20.jpg",
+   "lyrics": "lyrics/track20.lrc"
   },
   {
    "file": "track21.mp3",
    "title": "不是山谷",
-   "artist": "刘宏宇Honey L_何村猪"
+   "artist": "刘宏宇Honey L_何村猪",
+   "cover": "covers/track21.jpg",
+   "lyrics": "lyrics/track21.lrc"
   },
   {
    "file": "track22.mp3",
    "title": "不被定义的风",
-   "artist": "王以诺"
+   "artist": "王以诺",
+   "cover": "covers/track22.jpg",
+   "lyrics": "lyrics/track22.lrc"
   },
   {
    "file": "track24.mp3",
    "title": "什么",
-   "artist": "张柯骛"
+   "artist": "张柯骛",
+   "cover": "covers/track24.jpg",
+   "lyrics": "lyrics/track24.lrc"
   },
   {
    "file": "track25.mp3",
    "title": "你的年纪",
-   "artist": "凡清（Fanish）"
+   "artist": "凡清（Fanish）",
+   "cover": "covers/track25.jpg",
+   "lyrics": "lyrics/track25.lrc"
   },
   {
    "file": "track27.mp3",
    "title": "喜欢",
-   "artist": "阿肆"
+   "artist": "阿肆",
+   "cover": "covers/track27.jpg",
+   "lyrics": "lyrics/track27.lrc"
   },
   {
    "file": "track28.mp3",
    "title": "大山",
-   "artist": ""
+   "artist": "",
+   "cover": "covers/track28.jpg",
+   "lyrics": "lyrics/track28.lrc"
   },
   {
    "file": "track29.mp3",
    "title": "大雾",
-   "artist": "张一乔_未知音素"
+   "artist": "张一乔_未知音素",
+   "cover": "covers/track29.jpg",
+   "lyrics": "lyrics/track29.lrc"
   },
   {
    "file": "track30.mp3",
    "title": "少年凌云志",
-   "artist": "狗老七"
+   "artist": "狗老七",
+   "cover": "covers/track30.jpg",
+   "lyrics": "lyrics/track30.lrc"
   },
   {
    "file": "track31.mp3",
    "title": "平凡之路",
-   "artist": "Augenstern"
+   "artist": "Augenstern",
+   "cover": "covers/track31.jpg",
+   "lyrics": "lyrics/track31.lrc"
   },
   {
    "file": "track32.mp3",
    "title": "春风解意",
-   "artist": "孙睡觉_月亮也要睡"
+   "artist": "孙睡觉_月亮也要睡",
+   "cover": "covers/track32.jpg",
+   "lyrics": "lyrics/track32.lrc"
   },
   {
    "file": "track33.mp3",
    "title": "未完成秋天（feat.星尘）",
-   "artist": "乌托邦P"
+   "artist": "乌托邦P",
+   "cover": "covers/track33.jpg",
+   "lyrics": "lyrics/track33.lrc"
   },
   {
    "file": "track34.mp3",
    "title": "海街寺庙",
-   "artist": "吴垚滔"
+   "artist": "吴垚滔",
+   "cover": "covers/track34.jpg",
+   "lyrics": "lyrics/track34.lrc"
   },
   {
    "file": "track35.mp3",
    "title": "红豆",
-   "artist": "徐泽（要不要买菜）"
+   "artist": "徐泽（要不要买菜）",
+   "cover": "covers/track35.jpg",
+   "lyrics": "lyrics/track35.lrc"
   },
   {
    "file": "track37.mp3",
    "title": "虚拟",
-   "artist": ""
+   "artist": "",
+   "cover": "covers/track37.jpg",
+   "lyrics": "lyrics/track37.lrc"
   },
   {
    "file": "track38.mp3",
    "title": "蚍蜉",
-   "artist": "花粥"
+   "artist": "花粥",
+   "cover": "covers/track38.jpg",
+   "lyrics": "lyrics/track38.lrc"
   },
   {
    "file": "track40.mp3",
    "title": "跳楼机",
-   "artist": ""
+   "artist": "",
+   "cover": "covers/track40.jpg",
+   "lyrics": "lyrics/track40.lrc"
   },
   {
    "file": "track41.mp3",
    "title": "轮廓",
-   "artist": "旅行团乐队"
+   "artist": "旅行团乐队",
+   "cover": "covers/track41.jpg",
+   "lyrics": "lyrics/track41.lrc"
   },
   {
    "file": "track42.mp3",
    "title": "逐空·高考战歌",
-   "artist": ""
+   "artist": "",
+   "cover": "covers/track42.jpg",
+   "lyrics": "lyrics/track42.lrc"
   }
  ]
 }

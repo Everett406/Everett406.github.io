@@ -2,6 +2,10 @@
  * build-posts.mjs
  * 把仓库里「open 且带 post 标签」的 issue 渲染成 posts/posts.json
  * 用法：GH_TOKEN=xxx REPO=owner/repo node scripts/build-posts.mjs
+ *
+ * - cover: 取正文第一张图片作为封面
+ * - excerpt: 正文纯文本前 90 字
+ * - mp4/mov/webm 链接 → <video> 播放器
  */
 import { marked } from 'marked';
 import { writeFileSync, mkdirSync } from 'node:fs';
@@ -23,6 +27,30 @@ function sanitize(html) {
     .replace(/\son\w+='[^']*'/gi, '');
 }
 
+function enhance(html) {
+  // 视频附件链接 → 内嵌播放器
+  return html.replace(
+    /<a href="(https?:\/\/[^"]+\.(?:mp4|mov|webm)[^"]*)"[^>]*>[^<]*<\/a>/gi,
+    '<video controls preload="metadata" src="$1" style="max-width:100%;border-radius:6px;"></video>'
+  );
+}
+
+function extractCover(md) {
+  const m = md.match(/!\[[^\]]*\]\((https?:\/\/[^)\s"]+)/) || md.match(/<img[^>]+src=["']?(https?:\/\/[^"'\s>]+)/i);
+  return m ? m[1] : null;
+}
+
+function extractExcerpt(md) {
+  const text = md
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')          // 图片
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')         // 链接
+    .replace(/```[\s\S]*?```/g, ' ')                  // 代码块
+    .replace(/[#>*`_~|-]/g, '')                       // markdown 符号
+    .replace(/\s+/g, ' ')
+    .trim();
+  return text.slice(0, 90);
+}
+
 async function listPostIssues() {
   const issues = [];
   let page = 1;
@@ -42,14 +70,19 @@ async function listPostIssues() {
 
 const issues = await listPostIssues();
 
-const posts = issues.map(i => ({
-  slug: `p-${i.number}`,
-  title: i.title || '未命名',
-  date: (i.created_at || '').slice(0, 10),
-  issue_url: i.html_url,
-  number: i.number,
-  html: sanitize(marked.parse(i.body || '')),
-}));
+const posts = issues.map(i => {
+  const body = i.body || '';
+  return {
+    slug: `p-${i.number}`,
+    title: i.title || '未命名',
+    date: (i.created_at || '').slice(0, 10),
+    issue_url: i.html_url,
+    number: i.number,
+    cover: extractCover(body),
+    excerpt: extractExcerpt(body),
+    html: enhance(sanitize(marked.parse(body))),
+  };
+});
 
 mkdirSync('posts', { recursive: true });
 writeFileSync(
