@@ -607,8 +607,9 @@ main { margin-left: var(--rail-w); }
 }
 @media (max-width: 720px) {
   body { font-size: 15px; }
+  html, body { overflow-x: hidden; }
   .project-grid { grid-template-columns: 1fr; }
-  .project-card, .project-card:nth-child(n) { grid-column: span 1; min-height: 240px; }
+  .project-card, .project-card:nth-child(n) { grid-column: span 1 !important; min-height: 240px; }
   .hero-seal { width: 64px; height: 64px; bottom: 120px; right: 20px; }
   .hero-seal span { font-size: 22px; }
   .hero-stats { gap: 20px; }
@@ -617,7 +618,7 @@ main { margin-left: var(--rail-w); }
   .board-heat { grid-column: span 1; }
   .br-pc { display: none; }
   .timeline { padding-left: 36px; }
-  .tl-item::before { left: -31px; }
+  .tl-item::before { left: -35px; }
   .timeline-line { left: 6px; }
   .post-row .pr-date { width: 70px; font-size: 11px; }
   .detail-hero { padding-right: 0; }
@@ -881,7 +882,7 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
   .section-bg { font-size: clamp(90px, 26vw, 150px); top: 2%; }
   .stitch::after { content: "第" attr(data-no) "页"; letter-spacing: .2em; }
   .pr-cover { width: 52px; height: 52px; font-size: 20px; }
-  .project-card.featured { min-height: 260px; }
+  .project-card.featured { grid-column: span 1 !important; min-height: 260px; }
 }
 
 /* ── V2 补丁：详情封面 / 唱机模式按钮字体 / 看板图标 ─────── */
