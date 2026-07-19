@@ -611,6 +611,37 @@ main { margin-left: var(--rail-w); }
 /* 图片 */
 .detail-body img { max-width: 100%; border-radius: 6px; border: 1px solid var(--ink-12); }
 
+/* 图片懒加载：占位骨架 shimmer + 加载完淡入（通用，覆盖列表封面/详情大封面/正文图） */
+.lazy-img {
+  opacity: 0;
+  transition: opacity .45s ease;
+  background: linear-gradient(100deg, var(--ink-06) 30%, var(--ink-12) 50%, var(--ink-06) 70%);
+  background-size: 200% 100%;
+  animation: lazy-shimmer 1.4s ease-in-out infinite;
+  min-height: 80px;
+}
+.lazy-img.loaded {
+  opacity: 1;
+  animation: none;
+  background: none;
+}
+.lazy-img.failed {
+  opacity: 1;
+  background: var(--ink-06);
+  animation: none;
+}
+/* 列表封面：容器有固定尺寸，去掉 min-height 避免撑大 */
+.pr-cover .lazy-img { min-height: 0; }
+/* 详情大封面：保持原有 max-height，占位时给个最小高度 */
+.detail-cover.lazy-img { min-height: 200px; }
+@keyframes lazy-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lazy-img { animation: none; transition: opacity .2s; }
+}
+
 /* 视频：自定义播放器皮肤（朱砂书卷风） */
 .detail-body video { display: block; max-width: 100%; }
 .ztz-video {
