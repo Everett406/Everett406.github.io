@@ -1,9 +1,9 @@
----
 
 > [!NOTE]
 > **本仓库已迁移至 Gitee**：<https://gitee.com/Everett5678/Everett406.github.io>
 > GitHub 端仅作只读归档，新代码请推送到 Gitee。
 
+---
 # 折腾志 · 赴野 Everett
 
 > 人生的意义在于折腾。
